@@ -1,19 +1,18 @@
-// Main.java
 import model.*;
 import Strategy.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
     public static void main(String[] args) {
-        // Create a website
         Website website1 = new Website("http://testwebsite.com");
         Website website2 = new Website("http://newwebsite.org");
 
-        // Create notification preferences
         NotificationPreferences preferences = new NotificationPreferences();
         preferences.setFrequency("daily");
         preferences.setCommunicationChannel("email");
 
-        // Create users
         User user1 = new User();
         user1.setUserId(1);
         user1.setUsername("louay");
@@ -30,29 +29,25 @@ public class Main {
         user2.setPreferences(preferences);
         user2.setWebsite(website2);
 
-        // Choose a comparison strategy
         WebsiteComparisonStrategy strategy = new IdenticalContentSizeStrategy();
-        // Create website monitor system with the chosen strategy
         WebsiteMonitorSystem monitorSystem = new WebsiteMonitorSystem(strategy);
-        monitorSystem.getSubscriptions().add(website1);
-        monitorSystem.getSubscriptions().add(website2);
 
-        // Register users to the system
+        List<Website> subscriptions = new ArrayList<>();
+        subscriptions.add(website1);
+        subscriptions.add(website2);
+        monitorSystem.setSubscriptions(subscriptions);
+
         monitorSystem.addObserver(user1);
         monitorSystem.addObserver(user2);
 
-        // Simulate the system generating and delivering a notification
         Notification notification = monitorSystem.generateNotification();
         notification.setNotificationId(1);
         notification.setMessage("New update available on the website.");
 
-        // Deliver the notification
         monitorSystem.deliverNotification(notification);
 
-        // Demonstrate RegistrationController usage
         RegistrationController registrationController = new RegistrationController();
         registrationController.registerUser(user1);
         registrationController.registerUser(user2);
     }
 }
-

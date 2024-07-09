@@ -42,7 +42,10 @@ public class WebsiteMonitorSystem implements Observable {
     }
 
     public void setSubscriptions(List<Website> subscriptions) {
-        this.subscriptions = subscriptions;
+        this.subscriptions.clear(); // Clear the existing list
+        for (Website website : subscriptions) {
+            this.subscriptions.add(website); // Add each element from the new list
+        }
     }
 
     @Override
